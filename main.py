@@ -113,10 +113,10 @@ for i in range(0, collection_count):
         c.beatmaps.append(cm)
 
 
-for i in range(49,302):
+for i in range(29,302):
     c = Collection()
-    if i == 49:
-        c.name = "zsd ~49"
+    if i == 29:
+        c.name = "zsd ~029"
     elif i == 301:
         c.name = "zsd 300+"
     else:
@@ -240,15 +240,15 @@ def get_diff(file):
 
         while float(chunk[-1]) <= float(nexttiming[0]):
             chunk.append(float(chunk[-1])+chunklen)
-            # if len(chunk) > limit1:
-            #     break
+            if len(chunk) > limit1:
+                break
         del chunk[-1]
 
 
     # print (Timing)
     # print(chunk)
-    # if len(chunk) > limit2:
-    #     return 0
+    if len(chunk) > limit2:
+        return 0
 
     for i in range(len(chunk)-1):
         
@@ -337,10 +337,10 @@ for file in file_list_osu:
     if advanced == 1:
         print("hash :" + str(hash) + "\n")
     ked_diff = round(diff/1000)
-    for i in range(253):
+    for i in range(273):
         c = new.newlist[i]
-        if ked_diff < 50:
-            if str(c.name) == "zsd ~49":
+        if ked_diff < 30:
+            if str(c.name) == "zsd ~029":
                 # cm = CollectionMap()
                 # cm.hash = get_string(hash)
                 # colls.collections[i].beatmaps.append(cm)
@@ -370,9 +370,9 @@ fobjw = open("new.db", 'wb')
 fobjw.write(get_int(new.version))
     # Then write the number of collections
 if int(oldfile) == 1:
-    fobjw.write(get_int(len(new.list)+253))
+    fobjw.write(get_int(len(new.list)+273))
 if int(oldfile) == 0:
-    fobjw.write(get_int(253))
+    fobjw.write(get_int(273))
     # Then, for each collection
 
 if oldfile == 1:
@@ -382,11 +382,11 @@ if oldfile == 1:
 
         # Write the number of beatmaps in this collection
     
-        fobjw.write(get_int(len(c.hashs)+len(c.beatmaps)))
+        fobjw.write(get_int(len(c.beatmaps)))
         # Then for all beatmaps in the collection, write the MD5 hashes.
         for m in c.beatmaps:
             fobjw.write(get_string(m.hash))
-        print("{0} has {1} beatmaps.".format(c.name,len(c.hashs)))
+        print("{0} has {1} beatmaps.".format(c.name,len(c.beatmaps)))
 
 for c in new.newlist:
         # Write the collection name
