@@ -107,18 +107,6 @@ while True:
     if len(collline) > 2048:
         break
     print(coll)           
-# for i in range(0, collection_count):
-#     c = Collection()
-#     c.name = parse_string(fobj)
-#     collection_beatmap_count = int.from_bytes(fobj.read(OSU_INT), byteorder='little')
-#     new.list.append(c)
-
-#     for j in range(0, collection_beatmap_count):
-#             # The MD5 hash for the song
-#         cm = CollectionMap()
-#         cm.hash = parse_string(fobj)
-#         c.beatmaps.append(cm)
-
 
 for i in range(29,302):
     c = Collection()
@@ -135,9 +123,6 @@ fobj.close()
 
 print("무한 BPM 이나 0 BPM 에서는 작동이 보장되지 않습니다. \n무한에 가까운 BPM 이거나 0에 가까운 BPM에서는 큰 로딩시간이 필요하며\n몇몇 오투잼 컨버트 곡들은 정상 작동 하지 않습니다.\n")
 print("This program does not work with infinite BPM or 0 BPM songs.\nif the beatmap has large(almost infinite) or extreamly small (almost 0) BPM, it takes long times.\nSome O2jam converts does not work.\n")
-# if not os.path.exists("./TEMP/collection"):
-#     os.makedirs("./TEMP/collection")
-
 file_list = []
 get_files("./Songs/",file_list)
 file_list_osu = [file for file in file_list if file.endswith(".osu")]
@@ -218,12 +203,6 @@ def get_diff(file):
     for values in HitObject_lines:
         valuelist2 = values.split(',')
         HitObjects.append(valuelist2[2])
-        # if int(valuelist2[3]) != 128:
-        #     HitObjects.append(valuelist2[2])
-        # else:
-        #     continue
-
-    #롱노트 보정
 
     HitObjects.sort(key=int)
 
@@ -250,7 +229,6 @@ def get_diff(file):
             if len(chunk) > limit1:
                 break
         del chunk[-1]
-
 
     # print (Timing)
     # print(chunk)
@@ -323,8 +301,6 @@ def get_diff(file):
 
     return songdiff
 
-# if not os.path.exists("./TEMP/collection"):
-#     os.makedirs("./TEMP/collection")
 diffdata = open("diffdata.pickle","wb")
 
 for file in file_list_osu:
@@ -348,70 +324,43 @@ for file in file_list_osu:
         c = new.newlist[i]
         if ked_diff < 30:
             if str(c.name) == "zsd ~029":
-                # cm = CollectionMap()
-                # cm.hash = get_string(hash)
-                # colls.collections[i].beatmaps.append(cm)
                 c.hashs.append(hash)
             
         elif ked_diff > 300:
             if str(c.name) == "zsd 300+":
-                # cm = CollectionMap()
-                # cm.hash = hash
-                # colls.collections[i].beatmaps.append(cm)
                 c.hashs.append(hash)
 
         elif str(c.name) == "zsd " + str(ked_diff).zfill(3):
-            # cm = CollectionMap()
-            # cm.hash = hash
-            # colls.collections[i].beatmaps.append(cm)
             c.hashs.append(hash)
-        
-# end = input("press any key to continue")
-# print(colls.collections)
+      
         
 oldfile = int(input("계산이 완료되었습니다. 기존의 컬렉션도 포함할까요? (예: 1 아니요: 0)\n Calculation finished. include current collection? (Y: 1 N: 0)\n"))
-# diffdata = open("diffdata.pickle","wb")
+
 
 fobjw = open("new.db", 'wb')
-    # First write the collection version integer
+
 fobjw.write(get_int(new.version))
-    # Then write the number of collections
+
 if int(oldfile) == 1:
-    fobjw.write(get_int(len(new.list)+273))
+    fobjw.write(get_int(collection_count+273))
 if int(oldfile) == 0:
     fobjw.write(get_int(273))
-    # Then, for each collection
 
 if oldfile == 1:
     for coll in collline:
         fobjw.write(coll)
-    # for c in new.list:
-    #     # Write the collection name
-    #     fobjw.write(get_string(c.name))
-
-    #     # Write the number of beatmaps in this collection
-    
-    #     fobjw.write(get_int(len(c.beatmaps)))
-    #     # Then for all beatmaps in the collection, write the MD5 hashes.
-    #     for m in c.beatmaps:
-    #         fobjw.write(get_string(m.hash))
-    #     print("{0} has {1} beatmaps.".format(c.name,len(c.beatmaps)))
 
 for c in new.newlist:
-        # Write the collection name
+
     fobjw.write(get_string(c.name))
-        # Write the number of beatmaps in this collection
+
     fobjw.write(get_int(len(c.hashs)))
     
     for k in c.hashs:
         fobjw.write(get_string(k))
     print("{0} has {1} beatmaps.".format(c.name,len(c.hashs)))
 
-    # Close the file
 fobjw.close()
-
-# print("컬렉션에 추가가 완료되었습니다. 기존의 collection.db는 백업해두시고 new.db를 collection.db으로 이름 바꿔 주세요.")
-# print("Binished. Backup your 'collection.db' and rename 'new.db' to 'collection.db'.")
 
 end = input("끝. new.db가 생성되었습니다.")
 
