@@ -33,7 +33,3 @@ rename new.db to collection.db.
 
 My english is bad.. i am from south korea...
 if you did not get understanded, just google_transe it.
-
-그리고 현재 컬렉션까지 포함해서 새 파일로 만드는 건 아직 불안정합니다.
-
-포함하지 않고 만든 후 별도의 프로그램을 이용해 합쳐주세요.
