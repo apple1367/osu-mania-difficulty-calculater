@@ -2,11 +2,15 @@
 
 1. main.exe를 osu 폴더에 넣는다. /add main.exe to osu folder.
 2. main.exe를 실행시킨다. /run main.exe
+3. 모든 작업이 끝나면, new.db파일이 생성될것이다. /when finished, new.db will created.
+4. collection.db를 백업해두고 new.db를 collection.db로 이름 바꿔주면 끝. /backup collection.db and rename new.db to collection.db. finished
+
+you can run osu and check collections.
 
 
-무한 BPM 이나 0 BPM 에서는 작동이 보장되지 않습니다.
+무한 BPM 이나 0 BPM 인곡은 자동 스킵되며
 
-무한에 가까운 BPM 이거나 0에 가까운 BPM에서는 큰 로딩시간이 필요하며
+무한에 가까운 BPM 이거나 0에 가까운 BPM에서는 랙 방지를 위해 잘릴수도 있습니다.
 
 (BPM이 무한히 높으면, 무한히 많은 그룹들이 만들어지며, 이는 난이도에 영향을 주지 않지만, 내부 처리 속도를 둔화시킵니다.)
 
@@ -19,7 +23,7 @@
 
 This program does not work with infinite BPM or 0 BPM songs.
 
-if the beatmap has large(almost infinite) or extreamly small (almost 0) BPM, it takes long times.
+if the beatmap has large(almost infinite) or extreamly small (almost 0) BPM, it might inaccurate.
 
 (if BPM is large, almost infinite groups are made. they usually does not effect diff, but it takes A LONG TIME.)
 
