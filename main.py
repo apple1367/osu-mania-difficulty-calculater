@@ -99,18 +99,25 @@ new.version = version
 
 collection_count = int.from_bytes(fobj.read(OSU_INT), byteorder='little')
 
+collline = []
 
-for i in range(0, collection_count):
-    c = Collection()
-    c.name = parse_string(fobj)
-    collection_beatmap_count = int.from_bytes(fobj.read(OSU_INT), byteorder='little')
-    new.list.append(c)
+while True:
+    coll = fobj.read(1024)
+    collline.append(coll)  
+    if len(collline) > 2048:
+        break
+    print(coll)           
+# for i in range(0, collection_count):
+#     c = Collection()
+#     c.name = parse_string(fobj)
+#     collection_beatmap_count = int.from_bytes(fobj.read(OSU_INT), byteorder='little')
+#     new.list.append(c)
 
-    for j in range(0, collection_beatmap_count):
-            # The MD5 hash for the song
-        cm = CollectionMap()
-        cm.hash = parse_string(fobj)
-        c.beatmaps.append(cm)
+#     for j in range(0, collection_beatmap_count):
+#             # The MD5 hash for the song
+#         cm = CollectionMap()
+#         cm.hash = parse_string(fobj)
+#         c.beatmaps.append(cm)
 
 
 for i in range(29,302):
@@ -376,17 +383,19 @@ if int(oldfile) == 0:
     # Then, for each collection
 
 if oldfile == 1:
-    for c in new.list:
-        # Write the collection name
-        fobjw.write(get_string(c.name))
+    for coll in collline:
+        fobjw.write(coll)
+    # for c in new.list:
+    #     # Write the collection name
+    #     fobjw.write(get_string(c.name))
 
-        # Write the number of beatmaps in this collection
+    #     # Write the number of beatmaps in this collection
     
-        fobjw.write(get_int(len(c.beatmaps)))
-        # Then for all beatmaps in the collection, write the MD5 hashes.
-        for m in c.beatmaps:
-            fobjw.write(get_string(m.hash))
-        print("{0} has {1} beatmaps.".format(c.name,len(c.beatmaps)))
+    #     fobjw.write(get_int(len(c.beatmaps)))
+    #     # Then for all beatmaps in the collection, write the MD5 hashes.
+    #     for m in c.beatmaps:
+    #         fobjw.write(get_string(m.hash))
+    #     print("{0} has {1} beatmaps.".format(c.name,len(c.beatmaps)))
 
 for c in new.newlist:
         # Write the collection name
