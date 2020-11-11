@@ -43,3 +43,7 @@ rename new.db to collection.db.
 
 My english is bad.. i am from south korea...
 if you did not get understanded, just google_transe it.
+
+
+to-do
+추가할 zsd 범위 지정 가능하도록.
