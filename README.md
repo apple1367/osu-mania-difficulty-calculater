@@ -1,3 +1,9 @@
+사용법/HOW TO USE
+
+1. main.exe를 osu 폴더에 넣는다. /add main.exe to osu folder.
+2. main.exe를 실행시킨다. /run main.exe
+
+
 무한 BPM 이나 0 BPM 에서는 작동이 보장되지 않습니다.
 
 무한에 가까운 BPM 이거나 0에 가까운 BPM에서는 큰 로딩시간이 필요하며
