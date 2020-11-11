@@ -1,4 +1,3 @@
-
 import sys
 import os
 import os.path
@@ -87,6 +86,8 @@ def get_files(location,lists):
             for file_name in files:
                 lists.append(root + "/" + file_name)
 
+print("무한 BPM 이나 0 BPM 에서는 작동이 보장되지 않습니다. \n무한에 가까운 BPM 이거나 0에 가까운 BPM에서는 큰 로딩시간이 필요하며\n몇몇 오투잼 컨버트 곡들은 정상 작동 하지 않습니다.\n")
+print("This program does not work with infinite BPM or 0 BPM songs.\nif the beatmap has large(almost infinite) or extreamly small (almost 0) BPM, it takes long times.\nSome O2jam converts does not work.\n")
 start = input("press any key to start")
 
 fobj = open("collection.db", 'rb')
@@ -113,7 +114,7 @@ for i in range(29,302):
     if i == 29:
         c.name = "zsd ~029"
     elif i == 301:
-        c.name = "zsd 300+"
+        c.name = "zsd 400+"
     else:
         c.name = "zsd " + str(i).zfill(3)
     
@@ -121,8 +122,7 @@ for i in range(29,302):
 
 fobj.close()
 
-print("무한 BPM 이나 0 BPM 에서는 작동이 보장되지 않습니다. \n무한에 가까운 BPM 이거나 0에 가까운 BPM에서는 큰 로딩시간이 필요하며\n몇몇 오투잼 컨버트 곡들은 정상 작동 하지 않습니다.\n")
-print("This program does not work with infinite BPM or 0 BPM songs.\nif the beatmap has large(almost infinite) or extreamly small (almost 0) BPM, it takes long times.\nSome O2jam converts does not work.\n")
+
 file_list = []
 get_files("./Songs/",file_list)
 file_list_osu = [file for file in file_list if file.endswith(".osu")]
@@ -167,6 +167,48 @@ else:
     show_groupcal = 0
     limit1 = 1000
     limit2 = 60000
+
+show = input("각 zsd 별 대표곡을 참고하시겠습니까? (Y: 1 N: 0)\n")
+if int(show) == 1:
+    print("각 zsd 대표곡")
+    print("\nzsd 50: aran - L.F.O	[Advanced]  2.29★")
+    print("zsd 50: Shiena Nishizawa - The Asterisk War	[4K Hard]   2.81★")
+    print("zsd 50: SHK - Identity Part 4	[HD+]   3.17★")
+
+    print("\nzsd 75: Mayumi Morinaga(moimoi) - dreamin' feat.Ryu*	[victorica's EXHAUST Lv.14] 3.72★")
+    print("zsd 75: SHK - Identity Part III	[MX]    3.64★")
+    print("zsd 75: Hanz - Without Boundaries	[BringoBrango's Another]    4.39★")
+
+    print("\nzsd 100: P*Light - YELLOW SPLASH!!	[SUMMER SPLASH!!]   4.66★")
+    print("zsd 100: AAAA - Hazukashigariya no Toy Soldier	[Hyper] 3.75★")
+    print("zsd 100: BEMANI Sound Team ""Nekomata Master"" - Life is beautiful	[LeiN-'s MASTER]    4.06★")
+
+    print("\nzsd 125: Kobaryo - Eternal Ending (aran Remix)	[7K Eternal]    4.35★")
+    print("zsd 125: Kaneko Chiharu - Kai Dan    [CS' Ura Oni]   5.17★")
+
+    print("\nzsd 150: xi - Aragami	[Jinjin's 7K Extra] 6.19★")
+    print("zsd 150: Camellia feat. kradness, Nanahira & yukacco - Mazare Party	[M A Z A R E !!]    5.49★")
+
+    print("\nzsd 175: xi - FREEDOM DiVE	[Fullerene's 4K DIMENSIONS] 5.88★")
+    print("zsd 175: Morimori Atsush - Apsaras	[x0.8(162)] 6.28★")
+    print("zsd 175: Imperial Circus Dead Decadence - Yomi yori Kikoyu, Koukoku no Tou to Honoo no Shoujo.	[Hard]  5.62★")
+    print("zsd 193: 7K 7th Dan")
+
+    print("\nzsd 199: xi - Blue Zenith  [Bluanother II (Ascension)]	8.63★")
+    print("zsd 199: Nishino Kana - Go For It!!  [Bracket Challenge x1.2]    6.64★")
+
+    print("zsd 228: REFORM 4k EPSILON DAN")
+
+    print("zsd 244: 7k GAMMA DAN")
+
+    print("\nzsd 268: xi - Last Resort    [Jakads' LASTING LEGACY]    10.24★")
+    print("zsd 285: 7k AZIMUTH DAN")
+
+    print("zsd 290: xi - Blue Zenith	[JINDIMENSIONS (No LN ver)]	9.6★")
+    print("zsd 290: xi - FREEDOM DiVE	[Lv.24]	8.88★")
+
+minzsd = int(input("추가할 최소 zsd 는 어떻게 할까요?(29 이하는 더이상 나누지 않습니다.)\n"))
+maxzsd = int(input("추가할 최대 zsd 는 어떻게 할까요?(400 이상은 더이상 나누지 않습니다.)\n"))
 
 def get_diff(file):
 
@@ -230,8 +272,6 @@ def get_diff(file):
                 break
         del chunk[-1]
 
-    # print (Timing)
-    # print(chunk)
     if len(chunk) > limit2:
         return 0
 
@@ -322,45 +362,55 @@ for file in file_list_osu:
     ked_diff = round(diff/1000)
     for i in range(273):
         c = new.newlist[i]
-        if ked_diff < 30:
-            if str(c.name) == "zsd ~029":
-                c.hashs.append(hash)
+        if minzsd <= ked_diff <=maxzsd:
+            if ked_diff < 30:
+                if str(c.name) == "zsd ~029":
+                    c.hashs.append(hash)
             
-        elif ked_diff > 300:
-            if str(c.name) == "zsd 300+":
-                c.hashs.append(hash)
+            elif ked_diff > 400:
+                if str(c.name) == "zsd 400+":
+                    c.hashs.append(hash)
 
-        elif str(c.name) == "zsd " + str(ked_diff).zfill(3):
-            c.hashs.append(hash)
-      
+            elif str(c.name) == "zsd " + str(ked_diff).zfill(3):
+                c.hashs.append(hash)
+        
+# end = input("press any key to continue")
+# print(colls.collections)
         
 oldfile = int(input("계산이 완료되었습니다. 기존의 컬렉션도 포함할까요? (예: 1 아니요: 0)\n Calculation finished. include current collection? (Y: 1 N: 0)\n"))
+# diffdata = open("diffdata.pickle","wb")
+
 
 
 fobjw = open("new.db", 'wb')
-
+    # First write the collection version integer
 fobjw.write(get_int(new.version))
-
+    # Then write the number of collections
 if int(oldfile) == 1:
-    fobjw.write(get_int(collection_count+273))
+    fobjw.write(get_int(collection_count+373))
 if int(oldfile) == 0:
-    fobjw.write(get_int(273))
+    fobjw.write(get_int(373))
+    # Then, for each collection
 
 if oldfile == 1:
     for coll in collline:
         fobjw.write(coll)
-
+    
 for c in new.newlist:
-
+        # Write the collection name
     fobjw.write(get_string(c.name))
-
+        # Write the number of beatmaps in this collection
     fobjw.write(get_int(len(c.hashs)))
     
     for k in c.hashs:
         fobjw.write(get_string(k))
     print("{0} has {1} beatmaps.".format(c.name,len(c.hashs)))
 
+    # Close the file
 fobjw.close()
+
+print("컬렉션에 추가가 완료되었습니다. 기존의 collection.db는 백업해두시고 new.db를 collection.db으로 이름 바꿔 주세요.")
+print("Binished. Backup your 'collection.db' and rename 'new.db' to 'collection.db'.")
 
 end = input("끝. new.db가 생성되었습니다.")
 
